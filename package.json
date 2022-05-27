@@ -1,0 +1,15 @@
+{
+    "name": "wsuwp-plugin-fields-of-study",
+    "version": "0.0.1",
+    "description": "Plugin to manage fields of study.",
+    "main": "index.js",
+    "scripts": {
+        "start": "wp-scripts start assets/src/editor.js assets/src/front-end.js --output-path=assets/dist/",
+        "build": "wp-scripts build assets/src/editor.js assets/src/front-end.js --output-path=assets/dist/"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@wordpress/scripts": "^16.1.0"
+    }
+}
