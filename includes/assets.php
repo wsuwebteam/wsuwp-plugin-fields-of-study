@@ -2,7 +2,7 @@
 
 class Assets {
 
-	public static function register_block_editor_assets() {
+	public static function register_assets() {
 
 		$editor_asset = include Plugin::get( 'dir' ) . 'assets/dist/editor.asset.php';
 
@@ -27,6 +27,7 @@ class Assets {
 
 	}
 
+
 	public static function enqueue_block_editor_assets() {
 
 		wp_enqueue_script( 'wsuwp-plugin-programs-editor-scripts' );
@@ -34,9 +35,25 @@ class Assets {
 
 	}
 
+
+	public static function enqueue_frontend_assets() {
+
+		if ( is_singular() ) {
+			$id = get_the_ID();
+
+			if ( has_block( 'wsuwp/programs-list', $id ) ) {
+				wp_enqueue_script( 'wsu_design_system_script_programs_list' );
+				wp_enqueue_style( 'wsu_design_system_script_programs_list' );
+			}
+		}
+
+	}
+
+
 	public static function init() {
 
-		add_action( 'init', array( __CLASS__, 'register_block_editor_assets' ) );
+		add_action( 'init', array( __CLASS__, 'register_assets' ) );
+		add_action( 'enqueue_block_assets', array( __CLASS__, 'enqueue_frontend_assets' ) );
 		add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'enqueue_block_editor_assets' ) );
 
 	}

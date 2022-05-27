@@ -109,8 +109,6 @@ class Block_Programs_List {
 			array(
 				'render_callback' => array( __CLASS__, 'render' ),
 				'api_version'     => 2,
-				'script'          => 'wsu_design_system_script_programs_list',
-				'style'           => 'wsu_design_system_script_programs_list',
 			)
 		);
 
