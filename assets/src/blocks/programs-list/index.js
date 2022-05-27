@@ -11,9 +11,9 @@ registerBlockType("wsuwp/programs-list", {
             type: "string",
             default: "h2",
         },
-        showAllLinks: {
+        showFilters: {
             type: "boolean",
-            default: false,
+            default: true,
         },
     },
     edit: Edit,
