@@ -1,51 +1,59 @@
 const { InspectorControls } = wp.blockEditor;
-const { PanelBody, PanelRow, CheckboxControl, SelectControl } = wp.components;
+const { PanelBody, CheckboxControl, SelectControl } = wp.components;
 
 import React, { useState, useEffect } from "react";
 
 import "./styles.scss";
 
-const CSSNAMESPACE = "wsu-gutenberg-az-index";
+const CSSNAMESPACE = "wsu-gutenberg-programs-list";
 
-const linkGroups = [
-    "#",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-];
-
-const aLinks = [
-    "A Link to Remember",
-    "An Example Link",
-    "Another Example Link",
-];
-const bLinks = [
-    "Be a Link to Remember",
-    "Bears, Beets, Battlestar Galactica",
-    "Build Better Links",
+const examplePrograms = [
+    {
+        group: "A",
+        programs: [
+            {
+                name: "Acting",
+                degreeOptions: ["Major", "Minor"],
+                hasLink: true,
+            },
+            {
+                name: "Africana Studies",
+                degreeOptions: ["Major", "Certificate"],
+                hasLink: true,
+            },
+            {
+                name: "American Studies",
+                degreeOptions: ["Minor"],
+                hasLink: false,
+            },
+            {
+                name: "Anthropology",
+                degreeOptions: ["Major", "Minor", "Certificate"],
+                hasLink: true,
+            },
+        ],
+    },
+    {
+        group: "B",
+        programs: [
+            {
+                name: "Biochemistry",
+                degreeOptions: ["Minor", "Certificate"],
+                hasLink: false,
+            },
+            {
+                name: "Bioinformatics",
+                degreeOptions: ["Major", "Minor"],
+                hasLink: true,
+            },
+            { name: "Biology", degreeOptions: ["Certificate"], hasLink: false },
+            {
+                name: "Business Analytics",
+                degreeOptions: ["Major", "Minor", "Certificate"],
+                hasLink: true,
+            },
+        ],
+    },
 ];
 
 export default function Edit(props) {
@@ -69,102 +77,142 @@ export default function Edit(props) {
                     />
 
                     <CheckboxControl
-                        label="Show All Links"
-                        help="All A-Z links will be displayed on the page. Alphabet links and search will not be displayed."
-                        checked={attributes.showAllLinks}
-                        onChange={(val) => setAttributes({ showAllLinks: val })}
+                        label="Show Filters"
+                        help="Show search and taxonomy filters."
+                        checked={attributes.showFilters}
+                        onChange={(val) => setAttributes({ showFilters: val })}
                     />
                 </PanelBody>
             </InspectorControls>
 
             <div className={`${CSSNAMESPACE}`}>
-                <div className={`wsu-az-index ${attributes.className || ""}`}>
-                    {!attributes.showAllLinks && (
+                <div className={`${attributes.className || ""}`}>
+                    {!attributes.showFilters && (
                         <>
-                            <div className="wsu-az-index__controls">
-                                <nav
-                                    className="wsu-az-index__nav"
-                                    role="navigation"
-                                    aria-label="A-Z Index Navigation"
+                            <div className={`${CSSNAMESPACE}__controls`}>
+                                <div
+                                    className={`${CSSNAMESPACE}__control--search`}
                                 >
-                                    <ol className="wsu-az-index__nav-list">
-                                        {linkGroups.map((group) => (
-                                            <li className="wsu-az-index__nav-item">
-                                                <a
-                                                    href="#"
-                                                    className="wsu-az-index__nav-link wsu-button"
-                                                >
-                                                    {group}
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ol>
-                                </nav>
-                                <form className="wsu-az-index__search-form">
                                     <input
+                                        className={`${CSSNAMESPACE}__search-input`}
                                         type="text"
-                                        className="wsu-az-index__search-input"
-                                        name="search"
-                                        placeholder="Search"
+                                        placeholder="Search Degree Programs"
                                     />
-                                </form>
+                                </div>
+
+                                <div
+                                    className={`${CSSNAMESPACE}__control-group js-programs-list__select-controls`}
+                                >
+                                    <div
+                                        className={`${CSSNAMESPACE}__control--select`}
+                                    >
+                                        <button
+                                            className={`${CSSNAMESPACE}__control-button wsu-button wsu-button--tertiary wsu-button--size-small`}
+                                            aria-expanded="false"
+                                        >
+                                            <span
+                                                className={`${CSSNAMESPACE}__button-text`}
+                                            >
+                                                Area of Interest
+                                            </span>
+                                            <i
+                                                className={`${CSSNAMESPACE}__button-icon wsu-icon wsu-i-arrow-down-carrot`}
+                                            ></i>
+                                        </button>
+                                    </div>
+                                    <div
+                                        className={`${CSSNAMESPACE}__control--select`}
+                                    >
+                                        <button
+                                            className={`${CSSNAMESPACE}__control-button wsu-button wsu-button--tertiary wsu-button--size-small`}
+                                            aria-expanded="false"
+                                        >
+                                            <span
+                                                className={`${CSSNAMESPACE}__button-text`}
+                                            >
+                                                Degree Type
+                                            </span>
+                                            <i
+                                                className={`${CSSNAMESPACE}__button-icon wsu-icon wsu-i-arrow-down-carrot`}
+                                            ></i>
+                                        </button>
+                                    </div>
+
+                                    <div
+                                        className={`${CSSNAMESPACE}__control--select`}
+                                    >
+                                        <button
+                                            className={`${CSSNAMESPACE}__control-button wsu-button wsu-button--tertiary wsu-button--size-small`}
+                                            aria-expanded="false"
+                                        >
+                                            <span
+                                                className={`${CSSNAMESPACE}__button-text`}
+                                            >
+                                                Campus
+                                            </span>
+                                            <i
+                                                className={`${CSSNAMESPACE}__button-icon wsu-icon wsu-i-arrow-down-carrot`}
+                                            ></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </>
                     )}
 
-                    <div className="wsu-az-index__link-list-group">
-                        <attributes.headingLevel className="wsu-az-index__link-list-heading">
-                            A
-                        </attributes.headingLevel>
-                        <ol className="wsu-az-index__link-list">
-                            {aLinks.map((l) => (
-                                <li className="wsu-az-index__link-list-item">
-                                    <a
-                                        href="#"
-                                        className="wsu-az-index__link-list-link"
-                                    >
-                                        {l}
-                                    </a>
-                                </li>
-                            ))}
-                            <li className="wsu-az-index__link-list-item">
-                                <a
-                                    href="#"
-                                    className="wsu-az-index__link-list-link"
-                                >
-                                    &hellip;
-                                </a>
-                            </li>
-                        </ol>
-                    </div>
-
-                    {attributes.showAllLinks && (
-                        <div className="wsu-az-index__link-list-group">
-                            <attributes.headingLevel className="wsu-az-index__link-list-heading">
-                                B
+                    {examplePrograms.map((group) => (
+                        <div
+                            key={group.group}
+                            className={`${CSSNAMESPACE}__list-group`}
+                        >
+                            <attributes.headingLevel
+                                className={`${CSSNAMESPACE}__list-heading`}
+                            >
+                                {group.group}
                             </attributes.headingLevel>
-                            <ol className="wsu-az-index__link-list">
-                                {bLinks.map((l) => (
-                                    <li className="wsu-az-index__link-list-item">
-                                        <a
-                                            href="#"
-                                            className="wsu-az-index__link-list-link"
+                            <ol className={`${CSSNAMESPACE}__list`}>
+                                {group.programs.map((p) => (
+                                    <li
+                                        className={`${CSSNAMESPACE}__list-item`}
+                                    >
+                                        {p.hasLink ? (
+                                            <a
+                                                href="#"
+                                                className={`${CSSNAMESPACE}__list-link`}
+                                            >
+                                                {p.name}
+                                            </a>
+                                        ) : (
+                                            <span
+                                                className={`${CSSNAMESPACE}__list-link`}
+                                            >
+                                                {p.name}
+                                            </span>
+                                        )}
+
+                                        <div
+                                            className={`${CSSNAMESPACE}__degree-types`}
                                         >
-                                            {l}
-                                        </a>
+                                            {p.degreeOptions.map((d) => (
+                                                <span
+                                                    className={`${CSSNAMESPACE}__degree-type`}
+                                                >
+                                                    {d}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </li>
                                 ))}
-                                <li className="wsu-az-index__link-list-item">
-                                    <a
-                                        href="#"
-                                        className="wsu-az-index__link-list-link"
+                                <li className={`${CSSNAMESPACE}__list-item`}>
+                                    <span
+                                        className={`${CSSNAMESPACE}__list-link`}
                                     >
                                         &hellip;
-                                    </a>
+                                    </span>
                                 </li>
                             </ol>
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
         </>
