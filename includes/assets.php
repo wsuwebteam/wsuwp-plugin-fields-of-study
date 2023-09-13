@@ -4,6 +4,7 @@ class Assets {
 
 	public static function register_assets() {
 
+        $wds_version = get_theme_mod( 'wsu_wds_version', '2.x' );
 		$editor_asset = include Plugin::get( 'dir' ) . 'assets/dist/editor.asset.php';
 
 		// register editor assets
@@ -22,8 +23,8 @@ class Assets {
 		);
 
 		// register front-end assets
-		wp_register_script( 'wsu_design_system_script_programs_list', 'https://cdn.web.wsu.edu/designsystem/2.x/dist/bundles/standalone/programs-list/scripts.js', array(), WSUWPPLUGINGUTENBERGVERSION, true );
-		wp_register_style( 'wsu_design_system_script_programs_list', 'https://cdn.web.wsu.edu/designsystem/2.x/dist/bundles/standalone/programs-list/styles-wds.css', array(), WSUWPPLUGINGUTENBERGVERSION );
+		wp_register_script( 'wsu_design_system_script_programs_list', 'https://cdn.web.wsu.edu/designsystem/' . $wds_version . '/dist/bundles/standalone/programs-list/scripts.js', array(), WSUWPPLUGINGUTENBERGVERSION, true );
+		wp_register_style( 'wsu_design_system_script_programs_list', 'https://cdn.web.wsu.edu/designsystem/' . $wds_version . '/dist/bundles/standalone/programs-list/styles-wds.css', array(), WSUWPPLUGINGUTENBERGVERSION );
 
 	}
 

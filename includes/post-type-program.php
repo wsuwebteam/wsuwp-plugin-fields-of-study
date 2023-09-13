@@ -46,7 +46,7 @@ class Post_Type_Program {
 
 		// register meta fields
 		register_post_meta(
-			$slug,
+			self::$slug,
 			'wsuwp_program_url',
 			array(
 				'type'          => 'string',
@@ -59,7 +59,7 @@ class Post_Type_Program {
 		);
 
 		register_post_meta(
-			$slug,
+			self::$slug,
 			'wsuwp_program_campus_degrees',
 			array(
 				'type'          => 'object',
